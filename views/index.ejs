@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Macsekok</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<!-- MAIN -->
+<main>
+    <!-- List of Cats -->
+    <div>
+        <h2>Current Cats</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Bunda Sűrűség</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (const cat of cats) { %>
+                <tr>
+                    <td><%= cat.id %></td>
+                    <td><%= cat.name %></td>
+                    <td align="center"><%= cat.bunda_suruseg %></td>
+                    <td><a href="/edit/<%= cat.id %>">Update</a></td>
+                    <td>
+                        <button data-toggle="modal" data-target="#modal-toTrash<%= cat.id %>"
+                                class="btn-sm btn-dark details">Delete
+                            <span class="glyphicon glyphicon-trash" data-toggle="tooltip"
+                                  data-placement="top" title="Sent to Trash Box"></span></button>
+                    </td>
+                    <div class="modal modal-toTrash" id="modal-toTrash<%= cat.id %>">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">×
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="error-text"><strong>Confirmation</strong></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn-sm btn-dark details" data-dismiss="modal" aria-hidden="true">
+                                        Cancel
+                                    </button>
+                                    <form action="/delete/<%= cat.id %>" method="post">
+                                        <button class="btn-sm btn-dark details" value="delete">Yes</button>
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add A cat -->
+    <div>
+        <h2>Add A Cat</h2>
+
+        <form action="/add" method="post">
+            <div class="form-horizontal">
+
+                <label>Name:
+                    <input type="text" name="name" id="name"/>
+                </label>
+                <label>Bunda Sűrűség:
+                    <input type="text" name="bunda_suruseg" id="bunda_suruseg"/>
+                </label>
+                <input type="submit" value="Submit" class="btn-sm btn-dark details"/>
+
+            </div>
+        </form>
+
+    </div>
+</main>
+
+
+</body>
+
+
+</html>
